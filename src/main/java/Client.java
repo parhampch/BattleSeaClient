@@ -16,8 +16,7 @@ public class Client extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        StackPane root = new StackPane();
-        //Parent root = FXMLLoader.load(getClass().getResource("FXMLs.Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLs/Welcome/Login.fxml"));
         primaryStage.setTitle("Burial Fields");
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
