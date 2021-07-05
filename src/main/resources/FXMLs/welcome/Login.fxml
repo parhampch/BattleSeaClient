@@ -12,6 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.welcome.LoginGuiController">
@@ -33,22 +36,43 @@
                   <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
+            <ImageView fitHeight="500.0" fitWidth="333.0">
+               <image>
+                  <Image url="@../../Images/3c91bbf8dca987cebf234bc6b325a4b8.jpg" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="430.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="registerButton" layoutX="259.0" layoutY="429.0" mnemonicParsing="false" onAction="#registerButtonClicked" style="-fx-background-color: #4b016e;" text="Register" textFill="WHITE">
+            <Button fx:id="registerButton" layoutX="259.0" layoutY="429.0" mnemonicParsing="false" onAction="#registerButtonClicked" style="-fx-background-color: #c10101;" text="Register" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Label layoutX="65.0" layoutY="29.0" prefHeight="34.0" prefWidth="285.0" text="Welcome To RAMGram" textAlignment="CENTER" textFill="#c400fa">
+            <Label layoutX="135.0" layoutY="67.0" prefHeight="39.0" prefWidth="146.0" text="Burial Fields" textAlignment="CENTER">
                <font>
                   <Font size="26.0" />
                </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.7568627595901489" green="0.003921568859368563" blue="0.003921568859368563" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="0.729629635810852" blue="0.729629635810852" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
             </Label>
-            <Label layoutX="82.0" layoutY="431.0" text="Don't have an Account?" textFill="#be3dff">
+            <Label layoutX="82.0" layoutY="431.0" text="Don't have an Account?" textFill="#c10101">
                <font>
                   <Font size="15.0" />
                </font>
@@ -57,7 +81,7 @@
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor></TextField>
-            <Button fx:id="loginButton" layoutX="272.0" layoutY="224.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: #4b016e;" text="Login" textFill="WHITE">
+            <Button fx:id="loginButton" layoutX="272.0" layoutY="224.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: #c10101;" text="Login" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>

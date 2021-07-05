@@ -54,7 +54,7 @@ public class LoginGuiController {
 
     public void registerButtonClicked(ActionEvent actionEvent) {
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("Welcome/Register.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/welcome/Register.fxml"));
             stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

@@ -1,5 +1,6 @@
 package gui.controllers.welcome;
 
+import controllers.RegisterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +12,8 @@ import javafx.stage.Stage;
 
 public class RegisterGuiController {
 
-    @FXML
-    private Label fullNameError;
-    @FXML
-    private Label registerSuccessful;
+    private RegisterController registerController = new RegisterController();
+
     @FXML
     private Label usernameError;
     @FXML
@@ -22,25 +21,13 @@ public class RegisterGuiController {
     @FXML
     private Label rePasswordError;
     @FXML
-    private Label emailError;
-    @FXML
-    private Label phoneNumberError;
-    @FXML
-    private TextField fullNameTextField;
-    @FXML
     private TextField usernameTextField;
     @FXML
     private PasswordField passwordTextField;
     @FXML
     private PasswordField rePasswordTextField;
     @FXML
-    private TextField emailTextField;
-    @FXML
-    private TextField phoneNumberTextField;
-    @FXML
-    private TextField bioTextField;
-    @FXML
-    private DatePicker birthdayTextField;
+    private Label registerSuccessful;
     @FXML
     private Button backButton;
     @FXML
@@ -50,27 +37,26 @@ public class RegisterGuiController {
     private Parent root;
 
     public void registerButtonClicked(ActionEvent actionEvent) {
-        String fullName = fullNameTextField.getText();
-        if (fullName.isEmpty()) {
-            fullNameError.setText("you must enter your fullName");
-            return;
-        }
-        fullNameError.setText("");
+
         String username = usernameTextField.getText();
         if(username.isEmpty()){
             usernameError.setText("you must enter your username");
             return;
         }
+        if(username.contains(" ")){
+            usernameError.setText("username can't contain space");
+            return;
+        }
         else{
-            if(true) {
-                usernameError.setText("username already exists");
-                return;
-            }
             usernameError.setText("");
         }
         String password = passwordTextField.getText();
         if(password.isEmpty()){
             passwordError.setText("you must enter your password");
+            return;
+        }
+        if(password.contains(" ")){
+            passwordError.setText("password can't contain space");
             return;
         }
         passwordError.setText("");
@@ -86,45 +72,20 @@ public class RegisterGuiController {
             }
             rePasswordError.setText("");
         }
-        String email = emailTextField.getText();
-        if(email.isEmpty()){
-            System.out.println("you must enter your email");
+
+        if (!registerController.requestToMakeNewUser(username,password)){
+            usernameError.setText("username already exists");
             return;
         }
-        else if(!email.contains("@") || !email.contains(".")){
-            emailError.setText("invalid email address");
-            return;
+        else {
+            registerSuccessful.setText("register successful! go back to login");
         }
-        else{
-            if(false){
-                emailError.setText("email already exists");
-                return;
-            }
-            emailError.setText("");
-        }
-        String phoneNumber = phoneNumberTextField.getText();
-        if(!phoneNumber.isEmpty()) {
-            try {
-                Integer.parseInt(phoneNumber);
-                if (false){
-                    phoneNumberError.setText("phone number already exists");
-                    return;
-                }
-                phoneNumberError.setText("");
-            } catch (NumberFormatException e) {
-                phoneNumberError.setText("phone number should be only numbers");
-                return;
-            }
-        }
-        String bio = bioTextField.getText();
-        String birthday = birthdayTextField.getValue() == null ? "" : birthdayTextField.getValue().toString();
-        registerSuccessful.setText("register successful! go back to login");
     }
 
 
     public void backButtonClicked(ActionEvent actionEvent) {
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("Welcome/Login.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/welcome/Login.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
