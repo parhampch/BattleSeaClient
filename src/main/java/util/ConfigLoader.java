@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class ConfigLoader {
 
-    public static String readPropertiesFile(String property){
+    public static String readProperty(String property){
         Properties prop = new Properties();
         try {
             InputStream inputStream = new FileInputStream("src/main/resources/configurations/config.properties");

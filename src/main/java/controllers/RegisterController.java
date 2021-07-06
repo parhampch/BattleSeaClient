@@ -14,8 +14,8 @@ public class RegisterController {
 
     public RegisterController(){
         try {
-            int port = Integer.parseInt(ConfigLoader.readPropertiesFile("port"));
-            String host = ConfigLoader.readPropertiesFile("host");
+            int port = Integer.parseInt(ConfigLoader.readProperty("port"));
+            String host = ConfigLoader.readProperty("host");
             this.socket = new Socket(host,port);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));

@@ -25,9 +25,9 @@ public class Client extends Application {
                 primaryStage.close();
             }
         });
-//        primaryStage.setHeight(Integer.parseInt(ConfigLoader.readPropertiesFile("appWindowHeight")));
-//        primaryStage.setWidth(Integer.parseInt(ConfigLoader.readPropertiesFile("appWindowWidth")));
-        primaryStage.setResizable(Boolean.parseBoolean(ConfigLoader.readPropertiesFile("appWindowResizable")));
+//        primaryStage.setHeight(Integer.parseInt(ConfigLoader.readProperty("appWindowHeight")));
+//        primaryStage.setWidth(Integer.parseInt(ConfigLoader.readProperty("appWindowWidth")));
+        primaryStage.setResizable(Boolean.parseBoolean(ConfigLoader.readProperty("appWindowResizable")));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
