@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import util.ConfigLoader;
 
 
 public class Client extends Application {
@@ -24,6 +25,9 @@ public class Client extends Application {
                 primaryStage.close();
             }
         });
+//        primaryStage.setHeight(Integer.parseInt(ConfigLoader.readPropertiesFile("appWindowHeight")));
+//        primaryStage.setWidth(Integer.parseInt(ConfigLoader.readPropertiesFile("appWindowWidth")));
+        primaryStage.setResizable(Boolean.parseBoolean(ConfigLoader.readPropertiesFile("appWindowResizable")));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

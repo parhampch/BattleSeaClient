@@ -1,6 +1,7 @@
 package controllers;
 
 import models.ClientToken;
+import util.ConfigLoader;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,8 +14,9 @@ public class RegisterController {
 
     public RegisterController(){
         try {
-            //todo: config file
-            this.socket = new Socket("localhost" , 9595);
+            int port = Integer.parseInt(ConfigLoader.readPropertiesFile("port"));
+            String host = ConfigLoader.readPropertiesFile("host");
+            this.socket = new Socket(host,port);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {

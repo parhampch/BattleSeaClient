@@ -86,7 +86,7 @@ public class RegisterGuiController {
     public void backButtonClicked(ActionEvent actionEvent) {
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/welcome/Login.fxml"));
-            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
