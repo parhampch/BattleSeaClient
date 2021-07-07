@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 
 public class RegisterGuiController {
 
-    private RegisterController registerController = new RegisterController();
-
     @FXML
     private Label usernameError;
     @FXML
@@ -73,7 +71,7 @@ public class RegisterGuiController {
             rePasswordError.setText("");
         }
 
-        if (!registerController.requestToMakeNewUser(username,password)){
+        if (!RegisterController.requestToMakeNewUser(username,password)){
             usernameError.setText("username already exists");
             return;
         }

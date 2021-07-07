@@ -1,9 +1,9 @@
 package models;
 
 public class ClientToken {
-    private static String token;
+    private static String token = null;
 
-    public String getToken() {
+    public static String getToken() {
         return token;
     }
 

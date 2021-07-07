@@ -4,15 +4,21 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import util.ConfigLoader;
 
 public class ConfirmBox {
 
     static boolean answer;
 
     public static boolean display(String title , String message){
+
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        Image icon = new Image(classloader.getResourceAsStream("Images/warning.png"));
+
 //        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to log out?");
 //        alert.show();
 
@@ -21,6 +27,7 @@ public class ConfirmBox {
         window.setTitle(title);
         window.setResizable(false);
         window.setMinWidth(300);
+        window.getIcons().add(icon);
         Label label = new Label();
         label.setText(message);
 
