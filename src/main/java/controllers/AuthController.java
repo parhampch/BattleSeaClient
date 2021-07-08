@@ -18,6 +18,7 @@ public class AuthController {
             System.out.println("login result = "+ result);
             if (!result.equals("0")){
                 String token = result.split(" ")[1];
+                result = "1";
                 ClientToken.setToken(token);
                 System.out.println(username+"'s token is: "+token);
             }
