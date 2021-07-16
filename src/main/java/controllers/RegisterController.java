@@ -1,6 +1,5 @@
 package controllers;
 
-import models.ClientToken;
 import models.NetworkData;
 
 import java.io.*;

@@ -1,6 +1,6 @@
 package controllers;
 
-import models.ClientToken;
+import models.ClientInfo;
 import models.NetworkData;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class AuthController {
             if (!result.equals("0")){
                 String token = result.split(" ")[1];
                 result = "1";
-                ClientToken.setToken(token);
+                ClientInfo.setToken(token);
                 System.out.println(username+"'s token is: "+token);
             }
         } catch (IOException e) {
@@ -29,11 +29,11 @@ public class AuthController {
     }
 
     public static void logOut() {
-        if (ClientToken.getToken() != null) {
+        if (ClientInfo.getToken() != null) {
             try {
-                NetworkData.dataOutputStream.writeUTF(ClientToken.getToken() + " logout");
+                NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " logout");
                 NetworkData.dataOutputStream.flush();
-                ClientToken.setToken(null);
+                ClientInfo.setToken(null);
             } catch (IOException e) {
                 e.printStackTrace();
             }

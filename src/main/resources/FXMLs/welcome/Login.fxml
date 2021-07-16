@@ -65,7 +65,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <Button fx:id="loginButton" layoutX="272.0" layoutY="224.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: #c10101;" text="Login" textFill="WHITE">
+            <Button fx:id="loginButton" defaultButton="true" layoutX="272.0" layoutY="224.0" mnemonicParsing="false" onAction="#loginButtonClicked" style="-fx-background-color: #c10101;" text="Login" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

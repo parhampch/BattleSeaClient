@@ -1,6 +1,7 @@
 package gui.controllers.welcome;
 
 import controllers.AuthController;
+import gui.controllers.Toolbar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import models.ClientToken;
+import util.ConfigLoader;
 
 public class LoginGuiController {
     @FXML
@@ -60,17 +61,7 @@ public class LoginGuiController {
     }
 
     public void registerButtonClicked(ActionEvent actionEvent) {
-        try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/welcome/Register.fxml"));
-            stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-
+        Toolbar.getInstance().changeScene(ConfigLoader.readProperty("registerMenuAdd"),actionEvent);
     }
 
 
