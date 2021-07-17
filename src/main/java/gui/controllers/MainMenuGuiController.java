@@ -64,4 +64,7 @@ public class MainMenuGuiController {
 
     public void scoreBoardButtonClicked(ActionEvent actionEvent) {
     }
+
+    public void myInfoButtonClicked(ActionEvent actionEvent) {
+    }
 }

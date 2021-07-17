@@ -25,7 +25,7 @@
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="430.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="newGameButton" alignment="CENTER" blendMode="SRC_ATOP" layoutX="18.0" layoutY="29.0" mnemonicParsing="false" onAction="#newGameButtonClicked" prefHeight="103.0" prefWidth="210.0" style="-fx-background-color: #760000#a60000;" text="New Game" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="newGameButton" alignment="CENTER" blendMode="SRC_ATOP" layoutX="18.0" layoutY="29.0" mnemonicParsing="false" onAction="#newGameButtonClicked" prefHeight="82.0" prefWidth="190.0" style="-fx-background-color: #760000#a60000;" text="New Game" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -33,7 +33,7 @@
                   <Font name="Gabriola" size="38.0" />
                </font>
             </Button>
-            <Button fx:id="watchGameButton" alignment="CENTER" blendMode="SRC_ATOP" layoutX="155.0" layoutY="155.0" mnemonicParsing="false" onAction="#watchGameButtonClicked" prefHeight="98.0" prefWidth="246.0" style="-fx-background-color: #760000;" text="Watch A Game" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="watchGameButton" alignment="CENTER" blendMode="SRC_ATOP" layoutX="157.0" layoutY="137.0" mnemonicParsing="false" onAction="#watchGameButtonClicked" prefHeight="84.0" prefWidth="236.0" style="-fx-background-color: #760000;" text="Watch A Game" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -41,7 +41,7 @@
                   <Font name="Gabriola" size="38.0" />
                </font>
             </Button>
-            <Button fx:id="scoreBoardButton" alignment="CENTER" blendMode="SRC_ATOP" layoutX="32.0" layoutY="284.0" mnemonicParsing="false" onAction="#scoreBoardButtonClicked" prefHeight="109.0" prefWidth="246.0" style="-fx-background-color: #760000;" text="Score Board" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="scoreBoardButton" alignment="CENTER" blendMode="SRC_ATOP" layoutX="32.0" layoutY="250.0" mnemonicParsing="false" onAction="#scoreBoardButtonClicked" prefHeight="84.0" prefWidth="226.0" style="-fx-background-color: #760000;" text="Score Board" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -49,7 +49,7 @@
                   <Font name="Gabriola" size="38.0" />
                </font>
             </Button>
-            <Button fx:id="logoutButton" alignment="CENTER" layoutX="318.0" layoutY="409.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="46.0" prefWidth="82.0" style="-fx-background-color: #a60000;" text="Log Out" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+            <Button fx:id="logoutButton" alignment="CENTER" layoutX="18.0" layoutY="418.0" mnemonicParsing="false" onAction="#logoutButtonClicked" prefHeight="46.0" prefWidth="82.0" style="-fx-background-color: #a60000;" text="Log Out" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -62,6 +62,14 @@
                <effect>
                   <ColorAdjust />
                </effect>
+            </Button>
+            <Button fx:id="myInfoBtn" alignment="CENTER" blendMode="SRC_ATOP" layoutX="244.0" layoutY="346.0" mnemonicParsing="false" onAction="#myInfoButtonClicked" prefHeight="72.0" prefWidth="153.0" style="-fx-background-color: #760000;" text="My Info" textAlignment="CENTER" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Gabriola" size="38.0" />
+               </font>
             </Button>
          </children>
          <BorderPane.margin>

@@ -29,6 +29,7 @@ public class Client extends Application {
             e.consume();
             boolean answer = ConfirmBox.display("Exit confirmation" , "Are you sure to Exit?");
             if (answer){
+                primaryStage.close();
                 AuthController.logOut();
                 //todo: request death on thread (close)
                 try {
@@ -38,7 +39,7 @@ public class Client extends Application {
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-                primaryStage.close();
+
             }
         });
         primaryStage.setResizable(Boolean.parseBoolean(ConfigLoader.readProperty("appWindowResizable")));

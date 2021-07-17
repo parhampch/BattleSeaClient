@@ -11,15 +11,31 @@ public class GameTimer {
     private Timer timer;
     private TimerTask task;
     private int time;
-    private Label label;
+    private volatile Label label;
 
     public GameTimer(int time, Label label, StandbyMapGuiController controller) {
         this.time = time;
         this.label = label;
         timer = new Timer();
         task = new TimerTask() {
-            public volatile int counter = time;
+            int counter = time;
             boolean timeOut = false;
+
+            public int getCounter() {
+                return counter;
+            }
+
+            public void setCounter(int counter) {
+                this.counter = counter;
+            }
+
+            public boolean isTimeOut() {
+                return timeOut;
+            }
+
+            public void setTimeOut(boolean timeOut) {
+                this.timeOut = timeOut;
+            }
 
             @Override
             public void run() {
@@ -43,5 +59,9 @@ public class GameTimer {
 
     public TimerTask getTask() {
         return task;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 }
