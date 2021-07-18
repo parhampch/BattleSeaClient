@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 
 public class MapButton extends Button {
     public enum COLOR {
-        BLUE , BLACK , VIOLET , RED
+        BLUE , BLACK , VIOLET , RED , PINK , GREEN , YELLOW
     }
     private int x;
     private int y;
@@ -60,6 +60,9 @@ public class MapButton extends Button {
             case BLUE -> this.setStyle("-fx-background-color: #00ccff;");
             case BLACK -> this.setStyle("-fx-background-color: #000000;");
             case VIOLET -> this.setStyle("-fx-background-color: #7400b1;");
+            case PINK -> this.setStyle("-fx-background-color: #ff00a2;");
+            case GREEN -> this.setStyle("-fx-background-color: #08ff00;");
+            case YELLOW -> this.setStyle("-fx-background-color: #ffda00;");
         }
     }
 }
