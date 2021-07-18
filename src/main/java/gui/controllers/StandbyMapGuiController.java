@@ -107,13 +107,13 @@ public class StandbyMapGuiController implements Initializable {
 
     public void drawMap(){
         allowedTimes--;
-//        try {
-//            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " nextMap");
-//            NetworkData.dataOutputStream.flush();
-//            String map = NetworkData.dataInputStream.readUTF();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " nextMap");
+            NetworkData.dataOutputStream.flush();
+            String map = NetworkData.dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (int i = 0 ; i < 10 ; i++){
             for (int j = 0 ; j < 10 ; j++){
                 MapButton btn = new MapButton(i,j);
