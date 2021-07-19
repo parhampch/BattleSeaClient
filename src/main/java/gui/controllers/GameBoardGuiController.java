@@ -4,7 +4,6 @@ import javafx.animation.PauseTransition;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
@@ -72,16 +71,32 @@ public class GameBoardGuiController implements Initializable {
                                 timer.durationProperty()));
 
         if (ClientInfo.isTurn()) {
-            turn.setText("you");
-            timer.playFromStart();
+            beginMyTurn();
         } else {
+            ClientInfo.setTurn(false);
             turn.setText(ClientInfo.getCompetitorUsername());
-            try {
-                String result = NetworkData.dataInputStream.readUTF();
-                // 0/1/2  0 : time out  1 : water  2 : ship  3 : complete ship [x,y] arrayList +turn
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MapDrawer.disableAllButtons();
+            timer.stop();
+        }
+    }
+
+    public void beginMyTurn(){
+        ClientInfo.setTurn(true);
+        MapDrawer.enableAllButtons();
+        turn.setText("you");
+        timer.playFromStart();
+    }
+
+    public void stopMyTurn(){
+        ClientInfo.setTurn(false);
+        turn.setText(ClientInfo.getCompetitorUsername());
+        MapDrawer.disableAllButtons();
+        timer.stop();
+        try {
+            String result = NetworkData.dataInputStream.readUTF();
+            // 0/1/2  0 : time out  1 : water  2 : ship  3 : complete ship [x,y] arrayList +turn
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -97,11 +112,6 @@ public class GameBoardGuiController implements Initializable {
 
     public void changeTurnToCompetitor() {
         ClientInfo.setTurn(false);
-        for (Node child : competitorSea.getChildren()) {
-            MapButton newBtn = (MapButton) child;
-            newBtn.setDisable(true);
-        }
-
     }
 
     public static int[][] getMyMap() {

@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -44,21 +45,29 @@ public class StandbyMapGuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         drawMap();
-        PauseTransition timer = new PauseTransition(Duration.seconds(30));
+        PauseTransition timer = new PauseTransition(Duration.seconds(10));
         timer.setOnFinished(
                 e -> {
-                    startGame();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.initOwner(stage);
+                    alert.setHeaderText(null);
+                    alert.setHeight(200);
+                    alert.setContentText("You took too long! press OK and wait until you get to the game \nDO NOT DO ANYTHING");
+                    alert.setOnHidden(we -> startGame());
+                    alert.show();
+                    changeMapBtn.setDisable(true);
+
                 });
         startGameBtn.setOnAction(event -> {
             event.consume();
             timer.stop();
             startGame();
-
         });
         changeMapBtn.setOnAction(
                 e -> {
                     e.consume();
                     if (allowedTimes > 0) {
+//                        timer.jumpTo(timer.getCurrentTime().subtract(Duration.seconds(10)));   timer will never go above duration.
                         timer.pause();
                         Duration currentTime = timer.getCurrentTime();
                         Duration duration = timer.getDuration();
@@ -114,7 +123,6 @@ public class StandbyMapGuiController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void startGame() {
@@ -125,13 +133,18 @@ public class StandbyMapGuiController implements Initializable {
             if (result.equals("0")) {
                 AlertBox.display("wait", "you competitor is not ready yet\n you'll automatically go to game\n do not do anything");
                 result = NetworkData.dataInputStream.readUTF();
+                System.out.println(result);
             }
+            System.out.println(result);
             ClientInfo.setCompetitorUsername(result.split(" ")[1]);
-            ClientInfo.setTurn(result.split(" ")[2].equals("T") ? true : false);
+            ClientInfo.setTurn(result.split(" ")[2].equals("T"));
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/GameBoard.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            if(!ClientInfo.isTurn()){
+                System.out.println("i know it's not my turn");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
