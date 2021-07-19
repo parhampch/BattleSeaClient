@@ -125,6 +125,7 @@ public class StandbyMapGuiController implements Initializable {
 
     public void startGame() {
         try {
+            changeMapBtn.setDisable(true);
             NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " startGame");
             NetworkData.dataOutputStream.flush();
             String result = NetworkData.dataInputStream.readUTF();
@@ -136,13 +137,12 @@ public class StandbyMapGuiController implements Initializable {
             System.out.println(result);
             ClientInfo.setCompetitorUsername(result.split(" ")[1]);
             ClientInfo.setTurn(result.split(" ")[2].equals("T"));
+            GameBoardGuiController.setStage(stage);
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/GameBoard.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-            if(!ClientInfo.isTurn()){
-                System.out.println("i know it's not my turn");
-            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
