@@ -67,5 +67,6 @@ public class MainMenuGuiController {
     }
 
     public void myInfoButtonClicked(ActionEvent actionEvent) {
+        Toolbar.getInstance().changeScene("FXMLs/Info.fxml",actionEvent);
     }
 }
