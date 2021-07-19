@@ -16,9 +16,13 @@ import java.io.*;
 public class Client extends Application {
 
     public static void main(String[] args) {
-        new NetworkData();
-        launch(args);
-
+        try {
+            new NetworkData();
+            launch(args);
+        } catch (IOException e) {
+            System.out.println("connection to server failed");
+            System.exit(0);
+        }
     }
 
     @Override
@@ -31,8 +35,9 @@ public class Client extends Application {
             if (answer){
                 primaryStage.close();
                 AuthController.logOut();
-                //todo: request death on thread (close)
                 try {
+                    NetworkData.dataOutputStream.writeUTF("null close");
+                    NetworkData.dataOutputStream.flush();
                     NetworkData.dataOutputStream.close();
                     NetworkData.dataInputStream.close();
                     NetworkData.socket.close();

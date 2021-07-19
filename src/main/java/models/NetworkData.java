@@ -11,13 +11,10 @@ public class NetworkData {
     public static DataInputStream dataInputStream;
     public static DataOutputStream dataOutputStream;
 
-    public NetworkData() {
-        try {
-            socket = new Socket(ConfigLoader.readProperty("host"),Integer.parseInt(ConfigLoader.readProperty("port")));
-            dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public NetworkData() throws IOException {
+        socket = new Socket(ConfigLoader.readProperty("host"), Integer.parseInt(ConfigLoader.readProperty("port")));
+        dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+
     }
 }
