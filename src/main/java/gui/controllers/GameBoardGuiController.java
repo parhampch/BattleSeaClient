@@ -37,13 +37,13 @@ public class GameBoardGuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         competitorName.setText(ClientInfo.getCompetitorUsername());
-        MapDrawer.initializeCompetitorMap(competitorSea, this);
-        MapDrawer.drawMyMap(sea, myMap);
+        AttackHandler.initializeCompetitorMap(competitorSea, this);
+        AttackHandler.drawMyMap(sea, myMap);
 
         timer = new PauseTransition(Duration.seconds(25));
         timer.setOnFinished(
                 e -> {
-                    changeTurnInTimeOut();
+                    stopMyTurn();
                 });
         timerLabel
                 .textProperty()
@@ -75,14 +75,14 @@ public class GameBoardGuiController implements Initializable {
         } else {
             ClientInfo.setTurn(false);
             turn.setText(ClientInfo.getCompetitorUsername());
-            MapDrawer.disableAllButtons();
+            AttackHandler.disableAllButtons();
             timer.stop();
         }
     }
 
     public void beginMyTurn(){
         ClientInfo.setTurn(true);
-        MapDrawer.enableAllButtons();
+        AttackHandler.enableAllButtons();
         turn.setText("you");
         timer.playFromStart();
     }
@@ -90,7 +90,7 @@ public class GameBoardGuiController implements Initializable {
     public void stopMyTurn(){
         ClientInfo.setTurn(false);
         turn.setText(ClientInfo.getCompetitorUsername());
-        MapDrawer.disableAllButtons();
+        AttackHandler.disableAllButtons();
         timer.stop();
         try {
             String result = NetworkData.dataInputStream.readUTF();
@@ -100,7 +100,7 @@ public class GameBoardGuiController implements Initializable {
         }
     }
 
-    public void changeTurnInTimeOut(){
+    public void tellServerTimeOut(){
         try {
             NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " nextTurn");
             NetworkData.dataOutputStream.flush();

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class MapDrawer {
+public class AttackHandler {
 
     private static ArrayList<MapButton> competitorButtons = new ArrayList<>();
 
@@ -25,17 +25,13 @@ public class MapDrawer {
                 //btn.setDisable(true);
                 btn.setOnAction(e -> {
                 });
-                int cellColor = mapMatrix[i][j];
-                if (cellColor == 1)
-                    btn.setManner(MapButton.COLOR.GREEN);
-                else if (cellColor == 2)
-                    btn.setManner(MapButton.COLOR.YELLOW);
-                else if (cellColor == 3)
-                    btn.setManner(MapButton.COLOR.PINK);
-                else if (cellColor == 4)
-                    btn.setManner(MapButton.COLOR.VIOLET);
-                else
-                    btn.setManner(MapButton.COLOR.BLUE);
+                switch (mapMatrix[i][j]) {
+                    case 1 -> btn.setManner(MapButton.COLOR.GREEN);
+                    case 2 -> btn.setManner(MapButton.COLOR.YELLOW);
+                    case 3 -> btn.setManner(MapButton.COLOR.PINK);
+                    case 4 -> btn.setManner(MapButton.COLOR.VIOLET);
+                    default -> btn.setManner(MapButton.COLOR.BLUE);
+                }
                 gridPane.add(btn, j, i);
             }
         }
@@ -65,6 +61,7 @@ public class MapDrawer {
             NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " attack " + x + " " + y);
             NetworkData.dataOutputStream.flush();
             String result = NetworkData.dataInputStream.readUTF();
+            System.out.println(result);
             //result[0]: 0: water  1: ship  2: ship complete  3: game finished
             // number initialX initialY myTurn (if 2 or 3) arraylist
             String[] tempResult = result.split(" ");
