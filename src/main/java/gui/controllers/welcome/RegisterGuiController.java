@@ -28,13 +28,7 @@ public class RegisterGuiController {
     private PasswordField rePasswordTextField;
     @FXML
     private Label registerSuccessful;
-    @FXML
-    private Button backButton;
-    @FXML
-    private Button registerButton;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+
 
     public void registerButtonClicked(ActionEvent actionEvent) {
 

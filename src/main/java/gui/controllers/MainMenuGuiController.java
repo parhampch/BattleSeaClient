@@ -42,9 +42,7 @@ public class MainMenuGuiController {
 
     public void newGameButtonClicked(ActionEvent actionEvent) {
         try {
-            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " newGame");
-            NetworkData.dataOutputStream.flush();
-            String result = NetworkData.dataInputStream.readUTF();
+            String result = NetworkData.requestServer(ClientInfo.getToken() + " newGame");
             if (result.equals("0")) {
                 AlertBox.display("wait", "no online player available yet.\nwait until another player is found\n you'll automatically go to game\n do not do anything");
                 result = NetworkData.dataInputStream.readUTF();

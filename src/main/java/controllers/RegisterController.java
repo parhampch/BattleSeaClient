@@ -8,9 +8,7 @@ public class RegisterController {
 
     public static boolean requestToMakeNewUser(String username, String password) {
         try {
-            NetworkData.dataOutputStream.writeUTF("null register " + username + " " + password);
-            NetworkData.dataOutputStream.flush();
-            String result = NetworkData.dataInputStream.readUTF(); //result: 0 (username exists) , 1 (register successful)
+            String result = NetworkData.requestServer("null register " + username + " " + password); //result: 0 (username exists) , 1 (register successful)
             if (result.equals("1")){
                 return true;
             }

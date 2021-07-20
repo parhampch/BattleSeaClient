@@ -1,9 +1,13 @@
 package gui.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -20,8 +24,10 @@ import models.NetworkData;
 import util.ConfigLoader;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class GameListGuiController implements Initializable {
@@ -33,50 +39,47 @@ public class GameListGuiController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<String> scoreList = new ArrayList<>();
         try {
-            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " getScoreBoard");
-            NetworkData.dataOutputStream.flush();
-            String result = NetworkData.dataInputStream.readUTF();
-            scoreList = process(result);
+            String result = NetworkData.requestServer(ClientInfo.getToken() + " ongoingGames");
+            ArrayList<String> ongoingGames = process(result);
+            VBox layout = new VBox(10);
+            layout.setPrefSize(350, 550);
+            for (String ongoingGame : ongoingGames) {
+                //ongoingGame: gameID 1moves 1healthy 1bombs 2moves 2healthy 2bombs
+                String[] details = ongoingGame.split(" ");
+                String gameID = details[0];
+                Label label = new Label();
+                label.setTextFill(Color.BLUEVIOLET);
+                label.setWrapText(true);
+                label.setFont(new Font("Arial", 15));
+                label.setText("Player1 Moves: " + details[1] + " Healthy Ships: " + details[2] + " Bombs Hit: " + details[3]
+                + "\nPlayer2 Moves: " + details[4] + " Healthy Ships: " + details[5] + " Bombs Hit: " + details[6]);
+                Button button = new Button("Watch");
+                button.setId(gameID);
+                button.setOnAction(event -> {
+                    ((Stage)listPane.getScene().getWindow()).close();
+                    watchGame(button.getId());});
+                label.setGraphic(button);
+                layout.getChildren().add(label);
+            }
+            listPane.setContent(layout);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        VBox layout = new VBox(10);
-        layout.setPrefSize(350, 550);
-        for (int i = 0; i < 20; i++) {
-            //s: username score on/off
-            String gameID = "12345";
-            Label label = new Label();
-            label.setTextFill(Color.BLUEVIOLET);
-            label.setWrapText(true);
-            label.setText("Game: ");
-            Image icon = new Image(String.valueOf(getClass().getClassLoader().getResource(ConfigLoader.readProperty("scoreIconAdd"))));
-            label.setFont(new Font("Arial", 15));
-            label.setGraphic(new ImageView(icon));
-            Button button = new Button("Watch");
-            button.setId(gameID);
-            button.setOnAction(event -> {
-                System.out.println(button.getId());
-                watchGame(button.getId());});
-            label.setGraphic(button);
-            layout.getChildren().add(label);
-        }
-
-
-        listPane.setContent(layout);
 
 
     }
 
     private void watchGame(String id) {
         WatchGameGuiController.setGameId(id);
-        System.out.println("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         new Updater(new Stage(),"FXMLs/WatchGame.fxml","Watching Game").start();
     }
 
     private ArrayList<String> process(String result) {
-        return null;
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        ArrayList<String> games = new Gson().fromJson(result, type);
+        return games;
     }
 
 

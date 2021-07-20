@@ -2,18 +2,11 @@ package gui.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import gui.controllers.popups.AlertBox;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import models.ClientInfo;
+import models.MapButton;
 import models.NetworkData;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -28,7 +21,6 @@ public class AttackHandler {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 MapButton btn = new MapButton(i, j);
-                //btn.setDisable(true);
                 btn.setOnAction(e -> {
                 });
                 switch (mapMatrix[i][j]) {
@@ -63,53 +55,23 @@ public class AttackHandler {
 
     private static void handleAttack(MapButton btn, int x, int y, GameBoardGuiController controller) {
         try {
-            System.out.println("detected the attack");
             controller.getTimer().stop();
-            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " attack " + x + " " + y);
-            NetworkData.dataOutputStream.flush();
-            String result = NetworkData.dataInputStream.readUTF();
-            System.out.println(result);
+            String result = NetworkData.requestServer(ClientInfo.getToken() + " attack " + x + " " + y);
             //result[0]: 0: water  1: ship  2: ship complete  3: game finished
             // number initialX initialY myTurn (if 2 or 3) arraylist
-            String[] tempResult = result.split(" ");
-            int resultNum = Integer.parseInt(tempResult[0]);
-            boolean isMyTurn = tempResult[3].equals("T");
+            String[] attackRespond = result.split(" ");
+            int resultNum = Integer.parseInt(attackRespond[0]);
+            boolean isMyTurn = attackRespond[3].equals("T");
             if (resultNum == 0) {
                 btn.setManner(MapButton.COLOR.BLACK);
-            } else if (resultNum == 1) {
+            } else {
                 btn.setManner(MapButton.COLOR.RED);
-            } else if (resultNum == 2) {
-                btn.setManner(MapButton.COLOR.RED);
-                Type type = new TypeToken<ArrayList<Integer>>() {
-                }.getType();
-                ArrayList<Integer> waterCells = new Gson().fromJson(tempResult[4], type);
-                for (int i = 0; i < waterCells.size(); i += 2) {
-                    int waterX = waterCells.get(i);
-                    int waterY = waterCells.get(i + 1);
-                    for (MapButton competitorButton : competitorButtons) {
-                        if (competitorButton.getX() == waterX && competitorButton.getY() == waterY) {
-                            competitorButton.setManner(MapButton.COLOR.BLACK);
-                            competitorButton.setDestroyed();
-                        }
-                    }
+                if (resultNum == 2) {
+                    destroySeveral(attackRespond, competitorButtons);
+                } else if (resultNum == 3) {
+                    destroySeveral(attackRespond, competitorButtons);
+                    controller.finishGame(true);
                 }
-            }
-            else if (resultNum == 3){
-                btn.setManner(MapButton.COLOR.RED);
-                Type type = new TypeToken<ArrayList<Integer>>() {
-                }.getType();
-                ArrayList<Integer> waterCells = new Gson().fromJson(tempResult[4], type);
-                for (int i = 0; i < waterCells.size(); i += 2) {
-                    int waterX = waterCells.get(i);
-                    int waterY = waterCells.get(i + 1);
-                    for (MapButton competitorButton : competitorButtons) {
-                        if (competitorButton.getX() == waterX && competitorButton.getY() == waterY) {
-                            competitorButton.setManner(MapButton.COLOR.BLACK);
-                            competitorButton.setDestroyed();
-                        }
-                    }
-                }
-                controller.finishGame(true);
             }
             if (isMyTurn) {
                 controller.beginMyTurn();
@@ -139,80 +101,52 @@ public class AttackHandler {
 
     public static void updateMyMap(String result, GameBoardGuiController controller) {
         // T/F 0: competitor timeout 1 : water  2: ship  3: complete ship 4: lose  x y  (case 3 or 4) arraylist
-        System.out.println(result);
         String[] responds = result.split(" ");
-        int resultnum = Integer.parseInt(responds[1]);
-        if (resultnum == 1){
-            int x = Integer.parseInt(responds[2]);
-            int y = Integer.parseInt(responds[3]);
-            for (MapButton myButton : myButtons) {
-                if (myButton.getX() == x && myButton.getY() == y)
-                    myButton.setManner(MapButton.COLOR.BLACK);
-            }
-        }
-        else if( resultnum ==  2){
-            int x = Integer.parseInt(responds[2]);
-            int y = Integer.parseInt(responds[3]);
-            for (MapButton myButton : myButtons) {
-                if (myButton.getX() == x && myButton.getY() == y){
-                    myButton.setManner(MapButton.COLOR.RED);
-                    myButton.setDestroyed();
-                }
-            }
-        }
-        else if (resultnum == 3){
-            int x = Integer.parseInt(responds[2]);
-            int y = Integer.parseInt(responds[3]);
-            for (MapButton myButton : myButtons) {
-                if (myButton.getX() == x && myButton.getY() == y) {
-                    myButton.setManner(MapButton.COLOR.RED);
-                    myButton.setDestroyed();
-                }
-            }
-            Type type = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            ArrayList<Integer> waterCells = new Gson().fromJson(responds[4], type);
-            for (int i = 0; i < waterCells.size(); i += 2) {
-                int waterX = waterCells.get(i);
-                int waterY = waterCells.get(i + 1);
-                for (MapButton myButton : myButtons) {
-                    if (myButton.getX() == waterX && myButton.getY() == waterY) {
-                        myButton.setManner(MapButton.COLOR.BLACK);
-                        myButton.setDestroyed();
-                    }
-                }
-            }
-        }
-        else if (resultnum == 4){
-            int x = Integer.parseInt(responds[2]);
-            int y = Integer.parseInt(responds[3]);
-            for (MapButton myButton : myButtons) {
-                if (myButton.getX() == x && myButton.getY() == y) {
-                    myButton.setManner(MapButton.COLOR.RED);
-                    myButton.setDestroyed();
-                }
-            }
-            Type type = new TypeToken<ArrayList<Integer>>() {
-            }.getType();
-            ArrayList<Integer> waterCells = new Gson().fromJson(responds[4], type);
-            for (int i = 0; i < waterCells.size(); i += 2) {
-                int waterX = waterCells.get(i);
-                int waterY = waterCells.get(i + 1);
-                for (MapButton myButton : myButtons) {
-                    if (myButton.getX() == waterX && myButton.getY() == waterY) {
-                        myButton.setManner(MapButton.COLOR.BLACK);
-                        myButton.setDestroyed();
-                    }
-                }
-            }
+        int resultNum = Integer.parseInt(responds[1]);
+        if (resultNum == 1) {
+            destroySingle(responds, MapButton.COLOR.BLACK);
+        } else if (resultNum == 2) {
+            destroySingle(responds, MapButton.COLOR.RED);
+        } else if (resultNum == 3) {
+            destroySingle(responds, MapButton.COLOR.RED);
+            destroySeveral(responds, myButtons);
+        } else if (resultNum == 4) {
+            destroySingle(responds, MapButton.COLOR.RED);
+            destroySeveral(responds, myButtons);
             controller.finishGame(false);
             return;
         }
-        if (responds[0].equals("T")){
+        if (responds[0].equals("T")) {
             controller.beginMyTurn();
-        }
-        else {
+        } else {
             controller.stopMyTurn();
+        }
+    }
+
+    public static void destroySingle(String[] responds, MapButton.COLOR color) {
+        int x = Integer.parseInt(responds[2]);
+        int y = Integer.parseInt(responds[3]);
+        for (MapButton myButton : myButtons) {
+            if (myButton.getX() == x && myButton.getY() == y) {
+                myButton.setManner(color);
+                myButton.setDestroyed();
+            }
+        }
+    }
+
+    public static void destroySeveral(String[] responds, ArrayList<MapButton> buttonArrayList) {
+        Type type = new TypeToken<ArrayList<Integer>>() {
+        }.getType();
+        ArrayList<Integer> waterCells = new Gson().fromJson(responds[4], type);
+        for (int i = 0; i < waterCells.size(); i += 2) {
+            int waterX = waterCells.get(i);
+            int waterY = waterCells.get(i + 1);
+            for (MapButton button : buttonArrayList) {
+                if (button.getX() == waterX && button.getY() == waterY) {
+                    button.setManner(MapButton.COLOR.BLACK);
+                    button.setDestroyed();
+                }
+            }
         }
     }
 }

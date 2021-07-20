@@ -26,9 +26,7 @@ public class InfoGuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " getInfo");
-            NetworkData.dataOutputStream.flush();
-            String result = NetworkData.dataInputStream.readUTF();
+            String result = NetworkData.requestServer(ClientInfo.getToken() + " getInfo");
             String[] info = result.split(" ");
             usernameLabel.setText(info[0]);
             winsLabel.setText(info[1]);

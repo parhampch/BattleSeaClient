@@ -29,7 +29,7 @@ public class Runner extends Application {
             public void run() {
                 try {
                     Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(address));
-                    primaryStage.setOnCloseRequest(e -> {
+                    primaryStage.setOnHiding(e -> {
                         e.consume();
                         updater.setClosed(true);
                         primaryStage.close();

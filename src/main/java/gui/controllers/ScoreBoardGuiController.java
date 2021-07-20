@@ -29,9 +29,7 @@ public class ScoreBoardGuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " getScoreBoard");
-            NetworkData.dataOutputStream.flush();
-            String result = NetworkData.dataInputStream.readUTF();
+            String result = NetworkData.requestServer(ClientInfo.getToken() + " getScoreBoard");
             ArrayList<String> scoreList = process(result);
             VBox layout = new VBox(10);
             layout.setPrefSize(350, 550);

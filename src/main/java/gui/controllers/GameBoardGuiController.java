@@ -114,10 +114,7 @@ public class GameBoardGuiController implements Initializable {
 
     public void tellServerTimeOut() {
         try {
-            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " nextTurn");
-            NetworkData.dataOutputStream.flush();
-            String timeoutresult = NetworkData.dataInputStream.readUTF();
-            System.out.println("time out" + timeoutresult);
+            NetworkData.requestServer(ClientInfo.getToken() + " nextTurn");
         } catch (IOException e) {
             e.printStackTrace();
         }

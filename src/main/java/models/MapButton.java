@@ -1,7 +1,6 @@
-package gui.controllers;
+package models;
 
 import javafx.scene.control.Button;
-import javafx.scene.shape.Rectangle;
 
 public class MapButton extends Button {
     public enum COLOR {

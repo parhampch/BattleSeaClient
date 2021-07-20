@@ -43,16 +43,7 @@ public class LoginGuiController {
             boolean isLoginValid = AuthController.loginChecker(username,password);
             if (isLoginValid) {
                 System.out.println(username + " logged in");
-            try {
-                root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/MainMenu.fxml"));
-                stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            }
-            catch (Exception e) {
-                errorMessage.setText(e.getMessage());
-            }
+                Toolbar.getInstance().mainMenu(actionEvent);
             }
             else{
                 errorMessage.setText("username or password invalid");

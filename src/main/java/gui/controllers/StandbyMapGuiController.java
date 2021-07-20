@@ -126,15 +126,12 @@ public class StandbyMapGuiController implements Initializable {
     public void startGame() {
         try {
             changeMapBtn.setDisable(true);
-            NetworkData.dataOutputStream.writeUTF(ClientInfo.getToken() + " startGame");
-            NetworkData.dataOutputStream.flush();
-            String result = NetworkData.dataInputStream.readUTF();
+            String result = NetworkData.requestServer(ClientInfo.getToken() + " startGame");
             if (result.equals("0")) {
+                //todo: make beautiful
                 AlertBox.display("wait", "you competitor is not ready yet\n you'll automatically go to game\n do not do anything");
                 result = NetworkData.dataInputStream.readUTF();
-                System.out.println(result);
             }
-            System.out.println(result);
             ClientInfo.setCompetitorUsername(result.split(" ")[1]);
             ClientInfo.setTurn(result.split(" ")[2].equals("T"));
             GameBoardGuiController.setStage(stage);
@@ -142,7 +139,6 @@ public class StandbyMapGuiController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
