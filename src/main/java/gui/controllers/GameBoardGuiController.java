@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import controllers.MapHandler;
 import javafx.animation.PauseTransition;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -44,8 +45,8 @@ public class GameBoardGuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         competitorName.setText(ClientInfo.getCompetitorUsername());
-        AttackHandler.initializeCompetitorMap(competitorSea, this);
-        AttackHandler.drawMyMap(sea, myMap);
+        MapHandler.initializeCompetitorMap(competitorSea, this);
+        MapHandler.drawMyMap(sea, myMap);
 
         timer = new PauseTransition(Duration.seconds(25));
         timer.setOnFinished(
@@ -87,7 +88,7 @@ public class GameBoardGuiController implements Initializable {
 
     public void beginMyTurn() {
         ClientInfo.setTurn(true);
-        AttackHandler.enableAllButtons();
+        MapHandler.enableAllButtons();
         turn.setText("you");
         timer.playFromStart();
     }
@@ -95,15 +96,14 @@ public class GameBoardGuiController implements Initializable {
     public void stopMyTurn() {
         ClientInfo.setTurn(false);
         turn.setText(ClientInfo.getCompetitorUsername());
-        AttackHandler.disableAllButtons();
+        MapHandler.disableAllButtons();
         timer.stop();
         PauseTransition socketTimer = new PauseTransition(Duration.seconds(1));
         socketTimer.setOnFinished(
                 e -> {
                     try {
                         String result = NetworkData.dataInputStream.readUTF();
-                        AttackHandler.updateMyMap(result , this);
-                        System.out.println("my map updated " + result);
+                        MapHandler.updateMyMap(result , this);
                     } catch (IOException error) {
                         error.printStackTrace();
                     }
@@ -141,12 +141,10 @@ public class GameBoardGuiController implements Initializable {
         String winner = b ? "you" : ClientInfo.getCompetitorUsername();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initOwner(stage);
-        alert.setHeaderText(null);
+        alert.setHeaderText("GAME FINISHED");
         alert.setHeight(200);
-        alert.setContentText("GAME FINISHED \n" + winner + " won");
-        alert.setOnHidden(we -> {
-            System.out.println("player game over");
-        });
+        alert.setContentText(winner + " won");
+        alert.setOnHidden(we -> {});
         alert.show();
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(ConfigLoader.readProperty("mainMenuAdd")));

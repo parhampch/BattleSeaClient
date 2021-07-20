@@ -2,24 +2,23 @@ package gui.controllers;
 
 import javafx.stage.Stage;
 
-public class Updater extends Thread {
+public class SceneUpdater extends Thread {
     private Stage stage;
     private volatile boolean isClosed;
-    private Runner runner;
+    private SceneRunner sceneRunner;
 
-    public Updater(Stage stage, String address, String title) {
+    public SceneUpdater(Stage stage, String address, String title) {
         this.stage = stage;
         isClosed = false;
-        runner = new Runner(this, address, title);
+        sceneRunner = new SceneRunner(this, address, title);
     }
 
     @Override
     public void run() {
         try {
             while (!this.isClosed) {
-                runner.start(stage);
+                sceneRunner.start(stage);
                 sleep(1000);
-
             }
         } catch (Exception e) {
             e.printStackTrace();

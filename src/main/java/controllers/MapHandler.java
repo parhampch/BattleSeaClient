@@ -1,7 +1,8 @@
-package gui.controllers;
+package controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import gui.controllers.GameBoardGuiController;
 import javafx.scene.layout.GridPane;
 import models.ClientInfo;
 import models.MapButton;
@@ -11,10 +12,12 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class AttackHandler {
+public class MapHandler {
 
     private static ArrayList<MapButton> myButtons = new ArrayList<>();
     private static ArrayList<MapButton> competitorButtons = new ArrayList<>();
+    private static ArrayList<MapButton> playerOneButtons = new ArrayList<>();
+    private static ArrayList<MapButton> playerTwoButtons = new ArrayList<>();
 
     public static void drawMyMap(GridPane gridPane, int[][] mapMatrix) {
         gridPane.getChildren().clear();
@@ -104,14 +107,14 @@ public class AttackHandler {
         String[] responds = result.split(" ");
         int resultNum = Integer.parseInt(responds[1]);
         if (resultNum == 1) {
-            destroySingle(responds, MapButton.COLOR.BLACK);
+            destroySingle(responds, MapButton.COLOR.BLACK , myButtons);
         } else if (resultNum == 2) {
-            destroySingle(responds, MapButton.COLOR.RED);
+            destroySingle(responds, MapButton.COLOR.RED , myButtons);
         } else if (resultNum == 3) {
-            destroySingle(responds, MapButton.COLOR.RED);
+            destroySingle(responds, MapButton.COLOR.RED , myButtons);
             destroySeveral(responds, myButtons);
         } else if (resultNum == 4) {
-            destroySingle(responds, MapButton.COLOR.RED);
+            destroySingle(responds, MapButton.COLOR.RED , myButtons);
             destroySeveral(responds, myButtons);
             controller.finishGame(false);
             return;
@@ -123,13 +126,13 @@ public class AttackHandler {
         }
     }
 
-    public static void destroySingle(String[] responds, MapButton.COLOR color) {
+    public static void destroySingle(String[] responds, MapButton.COLOR color , ArrayList<MapButton> buttonArrayList) {
         int x = Integer.parseInt(responds[2]);
         int y = Integer.parseInt(responds[3]);
-        for (MapButton myButton : myButtons) {
-            if (myButton.getX() == x && myButton.getY() == y) {
-                myButton.setManner(color);
-                myButton.setDestroyed();
+        for (MapButton button : buttonArrayList) {
+            if (button.getX() == x && button.getY() == y) {
+                button.setManner(color);
+                button.setDestroyed();
             }
         }
     }
@@ -146,6 +149,21 @@ public class AttackHandler {
                     button.setManner(MapButton.COLOR.BLACK);
                     button.setDestroyed();
                 }
+            }
+        }
+    }
+
+    public static void drawUnseenMap(GridPane gridPane, int[][] matrix) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                MapButton btn = new MapButton(i, j);
+                switch (matrix[i][j]){
+                    case 0 -> btn.setManner(MapButton.COLOR.BLACK);
+                    case -1 -> btn.setManner(MapButton.COLOR.RED);
+                    default -> btn.setManner(MapButton.COLOR.BLUE);
+                }
+                btn.setOnAction(e -> {});
+                gridPane.add(btn, j, i);
             }
         }
     }

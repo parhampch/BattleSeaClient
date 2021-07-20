@@ -35,7 +35,7 @@ public class MainMenuGuiController {
         boolean answer = ConfirmBox.display("Log out confirmation", "Are you sure you want to Log out??");
         if (answer) {
             AuthController.logOut();
-            Toolbar.getInstance().changeScene(ConfigLoader.readProperty("loginMenuAdd"), actionEvent);
+            SceneChanger.getInstance().changeScene(ConfigLoader.readProperty("loginMenuAdd"), actionEvent);
         }
     }
 
@@ -48,24 +48,23 @@ public class MainMenuGuiController {
                 result = NetworkData.dataInputStream.readUTF();
                 //todo: handle client so they can't do anything
             }
-            System.out.println("result is : "+result);
             ClientInfo.setOnGoingGameId(Integer.parseInt(result));
             StandbyMapGuiController.setStage(stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
-            Toolbar.getInstance().changeScene(ConfigLoader.readProperty("standbyMapMenuAdd"), actionEvent);
+            SceneChanger.getInstance().changeScene(ConfigLoader.readProperty("standbyMapMenuAdd"), actionEvent);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void watchGameButtonClicked(ActionEvent actionEvent) {
-        new Updater(new Stage(), "FXMLs/GameList.fxml" , "List Of OnGoing Games").start();
+        new SceneUpdater(new Stage(), "FXMLs/GameList.fxml" , "List Of OnGoing Games").start();
     }
 
     public void scoreBoardButtonClicked(ActionEvent actionEvent) {
-        new Updater(new Stage(), "FXMLs/ScoreBoard.fxml" , "Score Board").start();
+        new SceneUpdater(new Stage(), "FXMLs/ScoreBoard.fxml" , "Score Board").start();
     }
 
     public void myInfoButtonClicked(ActionEvent actionEvent) {
-        Toolbar.getInstance().changeScene("FXMLs/Info.fxml",actionEvent);
+        SceneChanger.getInstance().changeScene("FXMLs/Info.fxml",actionEvent);
     }
 }

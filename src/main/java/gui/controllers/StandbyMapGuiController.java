@@ -2,6 +2,7 @@ package gui.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import controllers.MapHandler;
 import gui.controllers.popups.AlertBox;
 import javafx.animation.PauseTransition;
 import javafx.beans.binding.Bindings;
@@ -43,14 +44,14 @@ public class StandbyMapGuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         drawMap();
-        PauseTransition timer = new PauseTransition(Duration.seconds(10));
+        PauseTransition timer = new PauseTransition(Duration.seconds(30));
         timer.setOnFinished(
                 e -> {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.initOwner(stage);
-                    alert.setHeaderText(null);
+                    alert.setHeaderText("You took too long!");
                     alert.setHeight(200);
-                    alert.setContentText("You took too long! press OK and wait until you get to the game \nDO NOT DO ANYTHING");
+                    alert.setContentText("press OK and wait until you get to the game \nDO NOT DO ANYTHING ELSE");
                     alert.setOnHidden(we -> startGame());
                     alert.show();
                     changeMapBtn.setDisable(true);
@@ -114,8 +115,7 @@ public class StandbyMapGuiController implements Initializable {
             Type type = new TypeToken<int[][]>() {
             }.getType();
             int[][] mapMatrix = new Gson().fromJson(map, type);
-            System.out.println(new Gson().toJson(map));
-            AttackHandler.drawMyMap(sea, mapMatrix);
+            MapHandler.drawMyMap(sea, mapMatrix);
             GameBoardGuiController.setMyMap(mapMatrix);
             sea.setVisible(true);
         } catch (IOException e) {
@@ -128,8 +128,7 @@ public class StandbyMapGuiController implements Initializable {
             changeMapBtn.setDisable(true);
             String result = NetworkData.requestServer(ClientInfo.getToken() + " startGame");
             if (result.equals("0")) {
-                //todo: make beautiful
-                AlertBox.display("wait", "you competitor is not ready yet\n you'll automatically go to game\n do not do anything");
+                AlertBox.display("Wait", "you competitor is not ready yet\n you'll automatically go to game\n DO NOT DO ANYTHING ELSE");
                 result = NetworkData.dataInputStream.readUTF();
             }
             ClientInfo.setCompetitorUsername(result.split(" ")[1]);

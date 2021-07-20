@@ -1,15 +1,10 @@
 package gui.controllers.welcome;
 
 import controllers.RegisterController;
-import gui.controllers.Toolbar;
+import gui.controllers.SceneChanger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import util.ConfigLoader;
 
 public class RegisterGuiController {
@@ -78,7 +73,7 @@ public class RegisterGuiController {
 
 
     public void backButtonClicked(ActionEvent actionEvent) {
-        Toolbar.getInstance().changeScene(ConfigLoader.readProperty("loginMenuAdd"),actionEvent);
+        SceneChanger.getInstance().changeScene(ConfigLoader.readProperty("loginMenuAdd"),actionEvent);
     }
 
 

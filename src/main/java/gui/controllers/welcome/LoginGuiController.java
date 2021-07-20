@@ -1,11 +1,9 @@
 package gui.controllers.welcome;
 
 import controllers.AuthController;
-import gui.controllers.Toolbar;
+import gui.controllers.SceneChanger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -43,7 +41,7 @@ public class LoginGuiController {
             boolean isLoginValid = AuthController.loginChecker(username,password);
             if (isLoginValid) {
                 System.out.println(username + " logged in");
-                Toolbar.getInstance().mainMenu(actionEvent);
+                SceneChanger.getInstance().mainMenu(actionEvent);
             }
             else{
                 errorMessage.setText("username or password invalid");
@@ -52,7 +50,7 @@ public class LoginGuiController {
     }
 
     public void registerButtonClicked(ActionEvent actionEvent) {
-        Toolbar.getInstance().changeScene(ConfigLoader.readProperty("registerMenuAdd"),actionEvent);
+        SceneChanger.getInstance().changeScene(ConfigLoader.readProperty("registerMenuAdd"),actionEvent);
     }
 
 

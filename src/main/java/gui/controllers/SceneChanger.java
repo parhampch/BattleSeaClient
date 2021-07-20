@@ -8,21 +8,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import util.ConfigLoader;
 
-public class Toolbar {
+public class SceneChanger {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private static Toolbar toolbar;
+    private static SceneChanger sceneChanger;
 
-    private Toolbar() {
+    private SceneChanger() {
     }
 
-    public static Toolbar getInstance(){
-        if ( toolbar ==  null ){
-            toolbar = new Toolbar();
+    public static SceneChanger getInstance(){
+        if ( sceneChanger ==  null ){
+            sceneChanger = new SceneChanger();
         }
-        return toolbar;
+        return sceneChanger;
     }
 
     public void changeScene(String address, ActionEvent actionEvent){
@@ -34,7 +34,6 @@ public class Toolbar {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
         }
     }
 

@@ -10,16 +10,19 @@ import util.ConfigLoader;
 
 import static javafx.application.Application.launch;
 
-public class Runner extends Application {
+public class SceneRunner extends Application {
 
-    private Updater updater;
+    private SceneUpdater sceneUpdater;
     private String address;
     private String title;
 
-    public Runner(Updater updater, String address, String title) {
-        this.updater = updater;
+    public SceneRunner(SceneUpdater sceneUpdater, String address, String title) {
+        this.sceneUpdater = sceneUpdater;
         this.address = address;
         this.title = title;
+        if (title.equals("Watching Game")){
+            WatchGameGuiController.setSceneRunner(this);
+        }
     }
 
     @Override
@@ -28,10 +31,11 @@ public class Runner extends Application {
             @Override
             public void run() {
                 try {
+
                     Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(address));
                     primaryStage.setOnHiding(e -> {
                         e.consume();
-                        updater.setClosed(true);
+                        sceneUpdater.setClosed(true);
                         primaryStage.close();
                     });
                     primaryStage.setResizable(Boolean.parseBoolean(ConfigLoader.readProperty("appWindowResizable")));
@@ -45,12 +49,12 @@ public class Runner extends Application {
         });
     }
 
-    public Updater getUpdater() {
-        return this.updater;
+    public SceneUpdater getUpdater() {
+        return this.sceneUpdater;
     }
 
-    public void setUpdater(Updater updater) {
-        this.updater = updater;
+    public void setUpdater(SceneUpdater sceneUpdater) {
+        this.sceneUpdater = sceneUpdater;
     }
 
     public String getAddress() {

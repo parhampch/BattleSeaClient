@@ -39,7 +39,7 @@ public class InfoGuiController implements Initializable {
 
 
     public void backButtonClicked(ActionEvent actionEvent) {
-        Toolbar.getInstance().mainMenu(actionEvent);
+        SceneChanger.getInstance().mainMenu(actionEvent);
     }
 
 }
