@@ -4,9 +4,10 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.GameListGuiController">
+
+<AnchorPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ScoreBoardGuiController">
    <children>
-      <ScrollPane fx:id="listPane" layoutX="13.0" layoutY="12.0" prefHeight="580.0" prefWidth="380.0">
+      <ScrollPane fx:id="listPane" prefHeight="600.0" prefWidth="400.0">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>

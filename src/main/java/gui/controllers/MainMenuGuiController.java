@@ -5,7 +5,6 @@ import gui.controllers.popups.AlertBox;
 import gui.controllers.popups.ConfirmBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -61,9 +60,11 @@ public class MainMenuGuiController {
     }
 
     public void watchGameButtonClicked(ActionEvent actionEvent) {
+        new Updater(new Stage(), "FXMLs/GameList.fxml" , "List Of OnGoing Games").start();
     }
 
     public void scoreBoardButtonClicked(ActionEvent actionEvent) {
+        new Updater(new Stage(), "FXMLs/ScoreBoard.fxml" , "Score Board").start();
     }
 
     public void myInfoButtonClicked(ActionEvent actionEvent) {
