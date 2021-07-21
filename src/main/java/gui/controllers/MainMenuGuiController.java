@@ -46,7 +46,6 @@ public class MainMenuGuiController {
             if (result.equals("0")) {
                 AlertBox.display("wait", "no online player available yet.\nwait until another player is found\n you'll automatically go to game\n do not do anything");
                 result = NetworkData.dataInputStream.readUTF();
-                //todo: handle client so they can't do anything
             }
             ClientInfo.setOnGoingGameId(Integer.parseInt(result));
             StandbyMapGuiController.setStage(stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
