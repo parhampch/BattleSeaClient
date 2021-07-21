@@ -3,15 +3,10 @@ package gui.controllers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controllers.MapHandler;
-import gui.controllers.popups.AlertBox;
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import models.ClientInfo;
 import models.NetworkData;
 
@@ -22,7 +17,6 @@ import java.util.ResourceBundle;
 
 public class WatchGameGuiController implements Initializable {
 
-    private static String gameId;
     private static SceneRunner sceneRunner;
 
     @FXML
@@ -43,7 +37,6 @@ public class WatchGameGuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            NetworkData.requestServer(ClientInfo.getToken() + " watchGames " + gameId);
             String result = NetworkData.requestServer(ClientInfo.getToken() + " gameInfo");
             if (result.equals("0")){
                 sceneRunner.stop();
@@ -78,13 +71,6 @@ public class WatchGameGuiController implements Initializable {
 
     }
 
-    public static String getGameId() {
-        return gameId;
-    }
-
-    public static void setGameId(String gameId) {
-        WatchGameGuiController.gameId = gameId;
-    }
 
     public static SceneRunner getSceneRunner() {
         return sceneRunner;

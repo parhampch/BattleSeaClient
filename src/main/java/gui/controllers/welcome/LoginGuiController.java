@@ -4,13 +4,10 @@ import controllers.AuthController;
 import gui.controllers.SceneChanger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import models.ClientInfo;
 import util.ConfigLoader;
 
 public class LoginGuiController {
@@ -19,13 +16,7 @@ public class LoginGuiController {
     @FXML
     private TextField usernameTextField;
     @FXML
-    private Button loginButton;
-    @FXML
     private Label errorMessage;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    
 
 
 
@@ -40,7 +31,6 @@ public class LoginGuiController {
         else {
             boolean isLoginValid = AuthController.loginChecker(username,password);
             if (isLoginValid) {
-                System.out.println(username + " logged in");
                 SceneChanger.getInstance().mainMenu(actionEvent);
             }
             else{

@@ -38,4 +38,5 @@ public class ClientInfo {
     public static void setTurn(boolean turn) {
         ClientInfo.turn = turn;
     }
+
 }

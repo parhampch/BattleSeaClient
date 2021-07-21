@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.ClientInfo;
 import models.NetworkData;
+import util.ConfigLoader;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -134,11 +135,11 @@ public class StandbyMapGuiController implements Initializable {
             ClientInfo.setCompetitorUsername(result.split(" ")[1]);
             ClientInfo.setTurn(result.split(" ")[2].equals("T"));
             GameBoardGuiController.setStage(stage);
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("FXMLs/GameBoard.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(ConfigLoader.readProperty("gameBoardAdd")));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

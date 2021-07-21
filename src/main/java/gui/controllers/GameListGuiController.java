@@ -2,7 +2,6 @@ package gui.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,8 +21,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameListGuiController implements Initializable {
-
-    private PauseTransition timer;
 
     @FXML
     private ScrollPane listPane;
@@ -62,8 +59,12 @@ public class GameListGuiController implements Initializable {
     }
 
     private void watchGame(String id) {
-        WatchGameGuiController.setGameId(id);
-        new SceneUpdater(new Stage(),"FXMLs/WatchGame.fxml","Watching Game").start();
+        try {
+            NetworkData.requestServer(ClientInfo.getToken() + " watchGames " + id);
+            new SceneUpdater(new Stage(),"FXMLs/WatchGame.fxml","Watching Game").start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private ArrayList<String> process(String result) {

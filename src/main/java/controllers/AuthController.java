@@ -2,7 +2,6 @@ package controllers;
 
 import models.ClientInfo;
 import models.NetworkData;
-
 import java.io.IOException;
 
 public class AuthController {
@@ -18,7 +17,6 @@ public class AuthController {
                 ClientInfo.setToken(token);
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return result.equals("1");
     }
@@ -26,7 +24,7 @@ public class AuthController {
     public static void logOut() {
         if (ClientInfo.getToken() != null) {
             try {
-                NetworkData.informServer(ClientInfo.getToken() + " logout");
+                NetworkData.requestServer(ClientInfo.getToken() + " logout");
                 ClientInfo.setToken(null);
             } catch (IOException e) {
                 e.printStackTrace();

@@ -8,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import util.ConfigLoader;
 
-import static javafx.application.Application.launch;
-
 public class SceneRunner extends Application {
 
     private SceneUpdater sceneUpdater;
